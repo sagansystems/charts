@@ -23,6 +23,11 @@ rollingUpdateMaxUnavailable: 1
 # Namespace to deploy agent in (Optional: Will default to release namespace)
 namespace:
 
+# Observers are what discover service endpoints that can then be monitored. 
+# They are configured in a list called observers in the main agent config file, by default kube-api is enabled by default
+# see https://docs.signalfx.com/en/latest/integrations/agent/observer-config.html for more information
+observers: []
+
 # Overwrites the default plugin config for processes and host-metadata plugins
 defaultMonitors:
   # https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html

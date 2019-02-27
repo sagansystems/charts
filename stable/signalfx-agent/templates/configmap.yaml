@@ -35,6 +35,10 @@ data:
       kubernetesAPI:
         skipVerify: true
       {{- end }}
+{{- if .Values.observers }}
+{{ toYaml .Values.observers | indent 4 }}
+{{- end }}
+
 
     monitors:
     - type: collectd/cpu
