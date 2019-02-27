@@ -1,0 +1,37 @@
+version: "1.0"
+
+stages:
+  - default
+
+steps:
+  configure_deployment_vars:
+    title: Configure shared deployment variables
+    image: alpine:latest
+    commands:
+      - cf_export HELMREPO=platform
+    when:
+      branch:
+        only:
+          - signalfx-release
+
+  signalfx_deps:
+    image: harbor.tools.gladly.com/pipelines/gladly-pipeline-step-helm
+    title: Build SignalFX dependencies
+    working_directory: ${{main_clone}}/stable/signalfx-agent/
+    commands:
+      - helm dependency build
+    when:
+      branch:
+        only:
+          - signalfx-release
+
+  signalfx:
+    image: harbor.tools.gladly.com/pipelines/gladly-pipeline-step-helm
+    title: Publish SignalFX package
+    working_directory: ${{main_clone}}/stable/signalfx-agent/
+    environment:
+      - ACTION=package
+    when:
+      branch:
+        only:
+          - signalfx-release
