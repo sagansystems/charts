@@ -23,6 +23,16 @@ rollingUpdateMaxUnavailable: 1
 # Namespace to deploy agent in (Optional: Will default to release namespace)
 namespace:
 
+# Overwrites the default plugin config for processes and host-metadata plugins
+defaultMonitors:
+  # https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html
+  processes:
+    processes:
+      - collectd
+      - signalfx-agent   
+  # https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-signalfx-metadata.html
+  hostMetadata:
+  
 # RBAC config for the agent
 rbac:
   create: true

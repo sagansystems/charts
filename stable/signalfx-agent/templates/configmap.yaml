@@ -25,7 +25,10 @@ data:
       kubernetes_cluster: {{ .Values.clusterName }}
 
     sendMachineID: false
-
+    
+    etcPath: {{ .Value.etcPath | default "/hostfs/etc" }}
+    procPath: {{ .Value.procPath | default "/hostfs/proc" }} 
+    
     observers:
     - type: k8s-api
       {{- if .Values.apiServerSkipVerify }}
@@ -44,17 +47,17 @@ data:
     - type: collectd/memory
     - type: collectd/protocols
     - type: collectd/signalfx-metadata
-      procFSPath: /hostfs/proc
     - type: host-metadata
-      etcPath: /hostfs/etc
-      procFSPath: /hostfs/proc
+{{- if .Values.defaultMonitors.hostMetadata }}
+{{ toYaml .Values.defaultMonitors.hostMetadata | indent 6 }}
+{{- end }}
     - type: collectd/uptime
     - type: collectd/vmem
 
     - type: collectd/processes
-      processes:
-      - collectd
-      - signalfx-agent
+{{- if .Values.defaultMonitors.processes }}
+{{ toYaml .Values.defaultMonitors.processes | indent 6 }}
+{{- end }} 
 
     - type: kubelet-stats
       {{- if .Values.containerStatsIntervalSeconds }}
