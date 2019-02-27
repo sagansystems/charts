@@ -26,9 +26,9 @@ data:
 
     sendMachineID: false
     
-    etcPath: {{ .Value.etcPath | default "/hostfs/etc" }}
-    procPath: {{ .Value.procPath | default "/hostfs/proc" }} 
-    
+    etcPath: {{ .Values.etcPath | default "/hostfs/etc" }}
+    procPath: {{ .Values.procPath | default "/hostfs/proc" }} 
+
     observers:
     - type: k8s-api
       {{- if .Values.apiServerSkipVerify }}
