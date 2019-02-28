@@ -26,6 +26,9 @@ data:
 
     sendMachineID: false
     
+    writer:
+      sendTraceHostCorrelationMetrics: true
+
     etcPath: {{ .Values.etcPath | default "/hostfs/etc" }}
     procPath: {{ .Values.procPath | default "/hostfs/proc" }} 
 {{- if .Values.traceEndpointUrl }}
