@@ -50,11 +50,11 @@ data:
     - type: collectd/load
     - type: collectd/memory
     - type: collectd/protocols
-    - type: collectd/signalfx-metadata
-    - type: host-metadata
-{{- if .Values.defaultMonitors.hostMetadata }}
-{{ toYaml .Values.defaultMonitors.hostMetadata | indent 6 }}
+    - type: collectd/signalfx-metadata    
+{{- if .Values.defaultMonitors.signalFxMetadata }}
+{{ toYaml .Values.defaultMonitors.signalFxMetadata | indent 6 }}
 {{- end }}
+    - type: host-metadata
     - type: collectd/uptime
     - type: collectd/vmem
 

@@ -28,7 +28,7 @@ namespace:
 # see https://docs.signalfx.com/en/latest/integrations/agent/observer-config.html for more information
 observers: []
 
-# Overwrites the default plugin config for processes and host-metadata plugins
+# Overwrites the default plugin config for processes and signalfx-metadata plugins
 defaultMonitors:
   # https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html
   processes:
@@ -36,7 +36,7 @@ defaultMonitors:
       - collectd
       - signalfx-agent   
   # https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-signalfx-metadata.html
-  hostMetadata:
+  signalFxMetadata:
   
 # RBAC config for the agent
 rbac:
