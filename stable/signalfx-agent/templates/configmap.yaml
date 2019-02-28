@@ -28,6 +28,9 @@ data:
     
     etcPath: {{ .Values.etcPath | default "/hostfs/etc" }}
     procPath: {{ .Values.procPath | default "/hostfs/proc" }} 
+{{- if .Values.traceEndpointUrl }}
+    traceEndpointUrl: {{ .Values.traceEndpointUrl }}
+{{- end }}
 
     observers:
     - type: k8s-api
@@ -39,9 +42,7 @@ data:
 {{ toYaml .Values.observers | indent 4 }}
 {{- end }}
 
-{{- if .Values.traceEndpointUrl }}
-  traceEndpointUrl: {{ .Values.traceEndpointUrl }}
-{{- end }}
+
 
 
     monitors:
