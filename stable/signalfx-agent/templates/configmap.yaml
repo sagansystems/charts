@@ -39,6 +39,10 @@ data:
 {{ toYaml .Values.observers | indent 4 }}
 {{- end }}
 
+{{- if .Values.traceEndpointUrl }}
+  traceEndpointUrl: {{ .Values.traceEndpointUrl }}
+{{- end }}
+
 
     monitors:
     - type: collectd/cpu
