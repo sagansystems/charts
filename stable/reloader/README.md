@@ -1,5 +1,7 @@
 # ![](https://raw.githubusercontent.com/stakater/Reloader/master/assets/web/reloader-round-100px.png) RELOADER
 
+> This chart has been **DEPRECATED**.  Please use the Chart found [here](https://github.com/stakater/Reloader#helm-charts) instead.
+
 A Kubernetes controller to watch changes in ConfigMap and Secrets and then restart pods for Deployment, StatefulSet and DaemonSet
 
 [![Get started with Stakater](https://stakater.github.io/README/stakater-github-banner.png)](http://stakater.com/?utm_source=Reloader&utm_medium=github)
@@ -72,22 +74,32 @@ The following quickstart let's you set up Reloader quickly:
 
 Update the `values.yaml` and set the following properties
 
-| Key           | Description                                                               | Example                            | Default Value                      |
-|---------------|---------------------------------------------------------------------------|------------------------------------|------------------------------------|
-| watchGlobally          | Option to watch configmap and secrets in all namespaces                                                | `true`                        | `true`                        |
-| matchLabels          | Additional match Labels for selector                                                | `{}`                        | `{}`                        |
-| deployment.annotations          | Annotations for deployment                                                | `{}`                        | `{}`                        |
-| deployment.labels          | Labels for deployment                                                | `provider`                        | `provider`                        |
-| deployment.image.name          | Image name for reloader                                                | `stakater/reloader`                        | `stakater/reloader`                        |
-| deployment.image.tag          | Image tag for reloader                                                | `v0.0.25`                        | `v0.0.25`                        |
-| deployment.image.pullPolicy          | Image pull policy for reloader                                                | `IfNotPresent`                        | `IfNotPresent`                        |
-| deployment.env.open          | Additional key value pair as environment variables                                                | `STORAGE: local`                        | ``                        |
-| deployment.env.secret          | Additional Key value pair as environment variables. It gets the values based on keys from default reloader secret if any                                               | `BASIC_AUTH_USER: test`                        | ``                        |
-| deployment.env.field          | Additional environment variables to expose pod information to containers.                                               | `POD_IP: status.podIP`                        | ``                        |
-| rbac.enabled          | Option to create rbac                                               | `true`                        | `true`                        |
-| rbac.labels          | Additional labels for rbac                                               | `{}`                        | `{}`                        |
-| serviceAccount.create          | Option to create serviceAccount                                               | `true`                        | `true`                        |
-| serviceAccount.name          | Name of serviceAccount                                               | `reloader`                        | `reloader`                        |
+| Key                                  | Description                                                                 | Default Value                      |
+|--------------------------------------|-----------------------------------------------------------------------------|------------------------------------|
+| global.imagePullSecrets              | Reference to one or more secrets to be used when pulling images             | `[]`                               |
+| reloader.watchGlobally               | Option to watch configmap and secrets in all namespaces                     | `true`                             |
+| reloader.matchLabels                 | Additional match Labels for selector                                        | `{}`                               |
+| reloader.deployment.annotations      | Annotations for deployment                                                  | `{}`                               |
+| reloader.deployment.labels           | Labels for deployment                                                       | `provider`                         |
+| reloader.deployment.image.name       | Image name for reloader                                                     | `stakater/reloader`                |
+| reloader.deployment.image.tag        | Image tag for reloader                                                      | `v0.0.29`                          |
+| reloader.deployment.image.pullPolicy | Image pull policy for reloader                                              | `IfNotPresent`                     |
+| reloader.deployment.env.open         | Additional key value pair as environment variables                          | ``                                 |
+| reloader.deployment.env.secret       | Additional Key value pair as environment variables. It gets the values based on keys from default reloader secret if any | ``                                 |
+| reloader.deployment.env.field        | Additional environment variables to expose pod information to containers.   | ``                                 |
+| reloader.deployment.affinity         | Optional node affinity for pod assignment                                   | `{}`                               |
+| reloader.deployment.nodeSelector     | Optional node labels for pod assignment                                     | `{}`                               |
+| reloader.deployment.securityContext  | Defines deployment security context                                         | `{}`                               |
+| reloader.deployment.tolerations      | Optional tolerations for pod assignment                                     | `{}`                               |
+| reloader.isOpenshift                 | Optional flag if we are using Openshift for additional permissions          | `false`                            |
+| reloader.ignoreSecrets               | Ignores secrets tracking                                                    | `false`                            |
+| reloader.ignoreConfigMaps            | Ignores configmap tracking                                                  | `false`                            |
+| reloader.rbac.enabled                | Option to create rbac                                                       | `true`                             |
+| reloader.rbac.labels                 | Additional labels for rbac                                                  | `{}`                               |
+| reloader.serviceAccount.create       | Option to create serviceAccount                                             | `true`                             |
+| reloader.serviceAccount.name         | Name of serviceAccount                                                      | `reloader`                         |
+| reloader.custom_annotations          | Optional flags to pass to the Reloader entrypoint                           | `{}`                               |
+
 
 ## Deploying to Kubernetes
 

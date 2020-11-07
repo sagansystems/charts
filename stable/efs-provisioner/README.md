@@ -60,13 +60,21 @@ replicaCount: 1
 revisionHistoryLimit: 10
 image:
   repository: quay.io/external_storage/efs-provisioner
-  tag: latest
+  tag: v2.4.0
   pullPolicy: IfNotPresent
+  # If specified, use these secrets to access the images
+  # pullSecrets:
+  #   - registry-secret
 
 busyboxImage:
   repository: gcr.io/google_containers/busybox
   tag: 1.27
   pullPolicy: IfNotPresent
+
+## Extra env variables and envFrom
+extraEnv: []
+
+envFrom: []
 
 ## Deployment annotations
 ##
@@ -76,30 +84,46 @@ annotations: {}
 ## https://github.com/kubernetes-incubator/external-storage/tree/master/aws/efs#deployment
 ##
 efsProvisioner:
+  # If specified, use this DNS or IP to connect the EFS
+  # dnsName: "my-custom-efs-dns.com"
   efsFileSystemId: fs-12345678
   awsRegion: us-east-2
   path: /example-pv
   provisionerName: example.com/aws-efs
   storageClass:
-    name: efs
+    name: aws-efs
     isDefault: false
     gidAllocate:
       enabled: true
       gidMin: 40000
       gidMax: 50000
     reclaimPolicy: Delete
+    mountOptions: []
 
 ## Enable RBAC
-## Leave serviceAccountName blank for the default name
 ##
 rbac:
+  # Specifies whether RBAC resources should be created
   create: true
-  serviceAccountName: ""
+
+## Create or use ServiceAccount
+##
+serviceAccount:
+  # Specifies whether a ServiceAccount should be created
+  create: true
+  # The name of the ServiceAccount to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
 
 ## Annotations to be added to deployment
 ##
 podAnnotations: {}
   # iam.amazonaws.com/role: efs-provisioner-role
+
+## Labels to be added to deployment
+##
+podLabels: {}
+  # environment: production
 
 ## Node labels for pod assignment
 ##
@@ -108,6 +132,10 @@ nodeSelector: {}
 # Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
+
+# Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: {}
 
 ## Configure resources
 ##
@@ -120,4 +148,12 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+
+priorityClassName: ""
+
+# Configure podsecuritypolicy
+# Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/
+podSecurityPolicy:
+  enabled: true
+  annotations: {}
 ```
